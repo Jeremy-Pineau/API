@@ -1,5 +1,6 @@
 package com.openclassrooms.api.repository;
 
+import com.openclassrooms.api.model.Promotion;
 import com.openclassrooms.api.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -7,23 +8,26 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, String> {
+public interface PromotionRepository extends CrudRepository<Promotion, Long> {
 
-    @Query("FROM User WHERE mail = :mail")
-    Optional<User> findByMail(String mail);
+    @Query("FROM Promotion")
+    List<Promotion> findAll();
 
-    @Transactional
-    @Modifying
-    @Query("DELETE FROM User u WHERE u.mail = :mail")
-    int deleteByMail(String mail);
+    Optional<Promotion> findById(int id);
 
     @Transactional
     @Modifying
-    @Query(value = "insert into Users (mail, nom, prenom, adresse, mdp) values (:mail, :nom, :prenom, :adresse, :mdp)",
+    @Query("DELETE FROM Promotion WHERE id = :id")
+    int deleteById(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into promotions (id, codePromo, detail) values (:id, :codePromo, :detail)",
             nativeQuery = true)
-    int create(String mail, String nom, String prenom, String adresse, String mdp);
+    int create(int id, String codePromo, String detail);
 
 }
