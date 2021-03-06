@@ -14,8 +14,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    public Optional<User> createUser(@RequestBody User user) {
+        int res = userService.createUser(user);
+        if (res == 1) {
+            return userService.getUser(user.getMail());
+        } else {
+            return Optional.empty();
+        }
     }
 
     @PostMapping("/user/login")

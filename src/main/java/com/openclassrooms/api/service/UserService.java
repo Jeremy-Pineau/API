@@ -31,4 +31,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public int createUser(User user) {
+        return userRepository.create(user.getMail(), user.getNom(), user.getPrenom(), user.getAdresse(), user.getMdp());
+    }
+
 }

@@ -19,4 +19,11 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Modifying
     @Query("DELETE FROM User u WHERE u.mail = :mail")
     int deleteByMail(String mail);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into Users (mail, nom, prenom, adresse, mdp) values (:mail, :nom, :prenom, :adresse, :mdp)",
+            nativeQuery = true)
+    int create(String mail, String nom, String prenom, String adresse, String mdp);
+
 }
