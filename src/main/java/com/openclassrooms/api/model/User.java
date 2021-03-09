@@ -3,6 +3,7 @@ package com.openclassrooms.api.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,5 +21,9 @@ public class User {
 
     private String mdp;
 
-
+    @ManyToMany
+    @JoinTable(name = "historique",
+            joinColumns = { @JoinColumn(name = "mail") },
+            inverseJoinColumns = { @JoinColumn(name = "idPromo") })
+    private List<Promotion> historique;
 }

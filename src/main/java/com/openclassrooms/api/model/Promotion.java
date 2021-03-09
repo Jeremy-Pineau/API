@@ -2,9 +2,7 @@ package com.openclassrooms.api.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -12,6 +10,7 @@ import javax.persistence.Table;
 public class Promotion {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String codePromo;
