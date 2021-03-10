@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PromotionRepository extends CrudRepository<Promotion, Long> {
+public interface PromotionRepository extends CrudRepository<Promotion, Integer> {
 
     @Query("FROM Promotion")
     List<Promotion> findAll();
@@ -26,7 +26,7 @@ public interface PromotionRepository extends CrudRepository<Promotion, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into promotions (id, codePromo, detail) values (:id, :codePromo, :detail)",
+    @Query(value = "insert into promotions (id, code_promo, detail) values (:id, :codePromo, :detail)",
             nativeQuery = true)
     int create(int id, String codePromo, String detail);
 

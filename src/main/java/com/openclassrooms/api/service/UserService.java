@@ -17,16 +17,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<User> getUser(final String mail) {
-        return userRepository.findByMail(mail);
+    public Optional<User> getUser(final int id) {
+        return userRepository.findById(id);
     }
 
     public Iterable<User> getUsers() {
         return userRepository.findAll();
     }
 
-    public void deleteUser(final String mail) {
-        userRepository.deleteByMail(mail);
+    public void deleteUser(final int id) {
+        userRepository.deleteById(id);
     }
 
     public User saveUser(User user) {
@@ -34,6 +34,6 @@ public class UserService {
     }
 
     public int createUser(User user) {
-        return userRepository.create(user.getMail(), user.getNom(), user.getPrenom(), user.getAdresse(), user.getMdp());
+        return userRepository.create(user.getId(), user.getMail(), user.getNom(), user.getPrenom(), user.getAdresse(), user.getMdp());
     }
 }

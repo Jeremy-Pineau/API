@@ -11,6 +11,9 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     private String mail;
 
     private String nom;
@@ -23,7 +26,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(name = "historique",
-            joinColumns = { @JoinColumn(name = "mail") },
-            inverseJoinColumns = { @JoinColumn(name = "idPromo") })
-    private List<Promotion> historique;
+            joinColumns = {@JoinColumn(name = "idUser", referencedColumnName = "id", table = "users")},
+            inverseJoinColumns = @JoinColumn(name = "idPromo", referencedColumnName = "id", table = "promotions"))
+    private List<Promotion> promotions;
 }
