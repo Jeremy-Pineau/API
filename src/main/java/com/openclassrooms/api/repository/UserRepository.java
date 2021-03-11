@@ -15,6 +15,9 @@ public interface UserRepository extends CrudRepository<User, String> {
     @Query("FROM User WHERE id = :id")
     Optional<User> findById(int id);
 
+    @Query("FROM User WHERE mail = :mail")
+    Optional<User> findByMail(String mail);
+
     @Transactional
     @Modifying
     @Query("DELETE FROM User u WHERE u.id = :id")

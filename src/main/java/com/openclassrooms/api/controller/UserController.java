@@ -26,8 +26,13 @@ public class UserController {
 
     @PostMapping("/login")
     public Optional<User> loginUser(@RequestBody User user) {
-        Optional<User> u = userService.getUser(user.getId());
-        return u;
+        Optional<User> u = userService.getUserByMail(user.getMail());
+        if (u.isPresent()){
+            if (u.get().getMdp().equals(user.getMdp())){
+                return u;
+            }
+        }
+        return Optional.empty();
     }
 
     @GetMapping("/all")
