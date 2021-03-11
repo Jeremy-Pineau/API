@@ -30,7 +30,7 @@ public interface HistoriqueRepository extends CrudRepository<Historique, Integer
             nativeQuery = true)
     int create(int id, Date dateScan, int idPromotion, int idUser);
 
-    @Query("FROM Historique where id_user = :userId")
+    @Query("FROM Historique where id_user = :userId order by date_scan desc")
     Iterable<Historique> findAllByUserId(int userId);
 
     @Query("FROM Historique where id_promo = :promoId")
