@@ -37,5 +37,5 @@ public interface HistoriqueRepository extends CrudRepository<Historique, Integer
     Iterable<Historique> findAllByPromoId(int promoId);
 
     @Query("FROM Historique where id_promo = :idPromo and id_user = :idUser")
-    Iterable<Historique> findAllByPromoIdAndUserId(int idUser, int idPromo);
+    Historique findAllByPromoIdAndUserId(int idUser, int idPromo);
 }

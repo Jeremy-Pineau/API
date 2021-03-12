@@ -45,7 +45,7 @@ public class HistoriqueService {
         return historiqueRepository.findAllByPromoId(promoId);
     }
 
-    public Iterable<Historique> getHistoriquesByPromoIdAndUserId(int idUser, int idPromo) {
+    public Historique getHistoriquesByPromoIdAndUserId(int idUser, int idPromo) {
         return historiqueRepository.findAllByPromoIdAndUserId(idUser, idPromo);
     }
 }

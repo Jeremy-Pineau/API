@@ -38,7 +38,7 @@ public class HistoriqueController {
     }
 
     @GetMapping("/allByPromoAndUser")
-    public Iterable<Historique> getHistoriquesByPromoIdAndUserId(@PathParam("idUser") final int idUser, @PathParam("idPromo") final int idPromo) {
+    public Historique getHistoriquesByPromoIdAndUserId(@PathParam("idUser") final int idUser, @PathParam("idPromo") final int idPromo) {
         return historiqueService.getHistoriquesByPromoIdAndUserId(idUser, idPromo);
     }
 
