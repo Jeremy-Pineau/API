@@ -18,7 +18,7 @@ public class UserController {
     public Optional<User> createUser(@RequestBody User user) {
         int res = userService.createUser(user);
         if (res == 1) {
-            return userService.getUser(user.getId());
+            return userService.getUserByMail(user.getMail());
         } else {
             return Optional.empty();
         }
