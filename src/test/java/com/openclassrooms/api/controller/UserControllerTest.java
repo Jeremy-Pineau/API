@@ -1,14 +1,25 @@
 package com.openclassrooms.api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.api.model.User;
+import com.openclassrooms.api.service.UserService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.hamcrest.CoreMatchers.is;
+
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -17,10 +28,59 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private UserController userController;
+
+    @Autowired
+    private UserService userService;
+
     @Test
-    public void testGetEmployees() throws Exception {
-        mockMvc.perform(get("/employees"))
+    void testGetUsers() throws Exception {
+        mockMvc.perform(get("/user/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].firstName", is("Laurent")));
+                .andExpect(result -> assertEquals("application/json", result.getResponse().getContentType()))
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[*].prenom", containsInAnyOrder("Alexis", "Dorian")))
+        ;
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2})
+    void testGetUser(int val) throws Exception {
+        mockMvc.perform(get("/user/" + val))
+                .andExpect(status().isOk())
+                .andExpect(result -> assertEquals("application/json", result.getResponse().getContentType()))
+                .andExpect(jsonPath("$.nom", is("Taallah")))
+        ;
+    }
+
+    @Test
+    void testCreateAndDeleteUser() throws Exception {
+        User u = new User();
+        u.setNom("Macron");
+        u.setPrenom("Manu");
+        u.setMail("manu.macron@gmail.com");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(u);
+
+        int nbUsers = userController.getUsers().size();
+
+        mockMvc.perform(post("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString))
+                .andExpect(status().isOk())
+                .andExpect(result -> assertEquals("application/json", result.getResponse().getContentType()))
+                .andExpect(jsonPath("$.nom", is("Macron")))
+                .andExpect(jsonPath("$.prenom", is("Manu")))
+        ;
+
+        Optional<User> user = userService.getUserByMail("manu.macron@gmail.com");
+        if (user.isPresent()) {
+            mockMvc.perform(delete("/user/" + user.get().getId()))
+                    .andExpect(status().isOk())
+            ;
+        }
+
+        assertEquals(nbUsers, userController.getUsers().size());
     }
 }

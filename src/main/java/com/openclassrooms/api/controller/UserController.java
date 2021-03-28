@@ -5,6 +5,7 @@ import com.openclassrooms.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,8 +37,8 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public Iterable<User> getUsers() {
-        return userService.getUsers();
+    public List<User> getUsers() {
+        return (List<User>) userService.getUsers();
     }
 
     @GetMapping("/{id}")
