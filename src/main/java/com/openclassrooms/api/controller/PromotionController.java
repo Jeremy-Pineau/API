@@ -5,6 +5,7 @@ import com.openclassrooms.api.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,8 +26,8 @@ public class PromotionController {
     }
 
     @GetMapping("/all")
-    public Iterable<Promotion> getPromotions() {
-        return promotionService.getPromotions();
+    public List<Promotion> getPromotions() {
+        return (List<Promotion>) promotionService.getPromotions();
     }
 
     @GetMapping("/{id}")
