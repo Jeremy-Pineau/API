@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.websocket.server.PathParam;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,13 +19,16 @@ public class HistoriqueController {
     private HistoriqueService historiqueService;
 
     @PostMapping
-    public int createHistorique(@RequestBody Historique historique) {
-        return historiqueService.createHistorique(historique);
+    public Historique createHistorique(@RequestBody Historique historique) {
+        if (historiqueService.createHistorique(historique) == 1) {
+            return historiqueService.getHistoriquesByPromoIdAndUserId(historique.getIdUser(), historique.getIdPromo());
+        }
+        return null;
     }
 
     @GetMapping("/all")
-    public Iterable<Historique> getHistoriques() {
-        return historiqueService.getHistoriques();
+    public List<Historique> getHistoriques() {
+        return (List<Historique>) historiqueService.getHistoriques();
     }
 
     @GetMapping("/allByUserId/{userId}")

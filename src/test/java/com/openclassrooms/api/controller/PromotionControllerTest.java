@@ -63,7 +63,7 @@ class PromotionControllerTest {
     }
 
     @Test
-    void updatePromotion() throws Exception {
+    void createUpdateDeletePromotion() throws Exception {
         Promotion p = new Promotion();
         p.setId(8);
         p.setCodePromo("test cp");
