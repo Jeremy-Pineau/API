@@ -1,9 +1,7 @@
 package com.openclassrooms.api.service;
 
 import com.openclassrooms.api.model.Historique;
-import com.openclassrooms.api.model.Promotion;
 import com.openclassrooms.api.repository.HistoriqueRepository;
-import com.openclassrooms.api.repository.PromotionRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

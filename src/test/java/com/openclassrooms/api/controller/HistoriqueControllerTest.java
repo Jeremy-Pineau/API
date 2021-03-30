@@ -133,11 +133,6 @@ class HistoriqueControllerTest {
     }
 
     @Test
-    void createHistorique() throws Exception {
-
-    }
-
-    @Test
     void testCreateWithoutUserParam() throws Exception {
         mockMvc.perform(post("/historique/0")
                 .contentType(MediaType.APPLICATION_JSON))

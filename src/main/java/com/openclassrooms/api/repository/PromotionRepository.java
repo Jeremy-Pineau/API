@@ -1,7 +1,6 @@
 package com.openclassrooms.api.repository;
 
 import com.openclassrooms.api.model.Promotion;
-import com.openclassrooms.api.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
